@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="timer">
+      <h1>Speech Timer</h1>
+      <div>
+        <label for="minTime">Minimum Time (in Minutes)</label>
+        <input type="number" name="minTime" id="minTime" />
+      </div>
+      <div>
+        <label for="maxTime">Maximum Time (in Minutes)</label>
+        <input type="number" name="maxTime" id="maxTime" />
+      </div>
+      <div id="actions">
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+      </div>
+      <div class="timer-display" id="timer-display">
+        <h2 id="timeRun"></h2>
+      </div>
+    </div>
+    <script type="module" src="/src/timer.ts"></script>
+  </body>
+</html>
