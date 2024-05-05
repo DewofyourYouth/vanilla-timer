@@ -119,7 +119,7 @@ button:focus-visible {
   }
 
   .timer-bar {
-    width: 100%;
+    width: 80%;
   }
 }
 
@@ -131,6 +131,7 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
