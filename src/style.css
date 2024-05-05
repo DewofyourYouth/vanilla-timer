@@ -109,6 +109,12 @@ button:focus-visible {
   margin-bottom: 30px;
 }
 
+@media only screen and (max-width: 1000px) {
+  .timer-display {
+    font-size: 5rem;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #1a1a1a;
