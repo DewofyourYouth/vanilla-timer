@@ -1,33 +1,40 @@
 let secondsRun = 0;
 const minTimeEl = <HTMLInputElement>document.getElementById("minTime");
 const maxTimeEl = <HTMLInputElement>document.getElementById("maxTime");
-const startBtn = document.getElementById("start");
-const stopBtn = document.getElementById("stop");
-const resetBtn = document.getElementById("reset");
-const display = document.getElementById("timeRun");
+const startBtn = <HTMLButtonElement>document.getElementById("start");
+const stopBtn = <HTMLButtonElement>document.getElementById("stop");
+const resetBtn = <HTMLButtonElement>document.getElementById("reset");
+const display = <HTMLHeadingElement>document.getElementById("timeRun");
 minTimeEl.value = minTimeEl.value ? minTimeEl.value : "5";
+maxTimeEl.value = maxTimeEl.value ? maxTimeEl.value : "7";
 let running = false;
 const timerTemplate = (seconds: number) =>
-  `${Math.floor(seconds / 60)} min ${String(seconds % 60).padStart(
+  `- ${Math.floor(seconds / 60)} min ${String(seconds % 60).padStart(
     2,
     "0"
-  )} sec`;
+  )} sec -`;
 display.innerText = timerTemplate(secondsRun);
 let intervalId: any;
 let pausedAt = 0;
 
-function startClock() {
+function runClock() {
   const startTime = new Date().getTime() / 1000;
   const minimumSeconds = parseFloat(minTimeEl.value) * 60;
-  console.log(`Minimum Seconds: ${minimumSeconds}`);
+  const maximumSeconds = parseFloat(maxTimeEl.value) * 60;
+  const averageSeconds = Math.floor((minimumSeconds + maximumSeconds) / 2);
+
   running = true;
   intervalId = setInterval(() => {
     if (running) {
       const now = new Date().getTime() / 1000;
       secondsRun = Math.floor(now - startTime) + pausedAt;
       display.innerText = timerTemplate(secondsRun);
-      if (secondsRun > minimumSeconds) {
-        document.body.style.backgroundColor = "green";
+      if (secondsRun > maximumSeconds) {
+        document.body.style.backgroundColor = "#cc3232";
+      } else if (secondsRun >= averageSeconds) {
+        document.body.style.backgroundColor = "#e7b416";
+      } else if (secondsRun >= minimumSeconds) {
+        document.body.style.backgroundColor = "#2dc937";
       } else {
         document.body.style.backgroundColor = "transparent";
       }
@@ -38,7 +45,6 @@ function startClock() {
 function stopClock() {
   pausedAt = secondsRun;
   running = false;
-  console.log(pausedAt);
   clearInterval(intervalId);
 }
 
@@ -46,8 +52,9 @@ function resetClock() {
   secondsRun = 0;
   pausedAt = 0;
   display.innerText = timerTemplate(secondsRun);
+  document.body.style.backgroundColor = "transparent";
 }
 
-startBtn?.addEventListener("click", startClock);
-stopBtn?.addEventListener("click", stopClock);
-resetBtn?.addEventListener("click", resetClock);
+startBtn.addEventListener("click", runClock);
+stopBtn.addEventListener("click", stopClock);
+resetBtn.addEventListener("click", resetClock);
