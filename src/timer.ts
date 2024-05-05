@@ -5,8 +5,10 @@ const startBtn = <HTMLButtonElement>document.getElementById("start");
 const stopBtn = <HTMLButtonElement>document.getElementById("stop");
 const resetBtn = <HTMLButtonElement>document.getElementById("reset");
 const display = <HTMLHeadingElement>document.getElementById("timeRun");
+const passed = <HTMLDivElement>document.getElementById("timer-passed");
 minTimeEl.value = minTimeEl.value ? minTimeEl.value : "5";
 maxTimeEl.value = maxTimeEl.value ? maxTimeEl.value : "7";
+passed.style.width = "0%";
 let running = false;
 const timerTemplate = (seconds: number) =>
   `- ${Math.floor(seconds / 60)} min ${String(seconds % 60).padStart(
@@ -29,6 +31,8 @@ function runClock() {
       const now = new Date().getTime() / 1000;
       secondsRun = Math.floor(now - startTime) + pausedAt;
       display.innerText = timerTemplate(secondsRun);
+      const percentDone = (secondsRun / maximumSeconds) * 100;
+      passed.style.width = `${percentDone < 100 ? percentDone : 100}%`;
       if (secondsRun > maximumSeconds) {
         document.body.style.backgroundColor = "#cc3232";
       } else if (secondsRun >= averageSeconds) {
@@ -51,6 +55,7 @@ function stopClock() {
 function resetClock() {
   secondsRun = 0;
   pausedAt = 0;
+  passed.style.width = "0%";
   display.innerText = timerTemplate(secondsRun);
   document.body.style.backgroundColor = "transparent";
 }
